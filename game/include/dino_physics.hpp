@@ -88,8 +88,12 @@ namespace dino {
 
         // this reward is not part of the game engine, rather it is for RL purposes 
         // the done is the reset switch, only becomes true if the dinosour collides with the obstical
-        
 
+        // this is setting the context for the current frame 
+        reward = 0.05f; // Base survival reward
+        done = false;
+        state.ticks_alive++;
+        
     }
 
 }
