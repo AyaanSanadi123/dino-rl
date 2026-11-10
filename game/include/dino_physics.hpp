@@ -94,6 +94,10 @@ namespace dino {
         done = false;
         state.ticks_alive++;
         
+        // process the action 
+        state.is_ducking = (action == 2 && state.player_y == 0.0f);
+
+        if(action == 1 && state.player)
     }
 
 }
