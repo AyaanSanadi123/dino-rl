@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdino_game.a CMakeFiles/dino_game.dir/game/src/renderer.cpp.o
+/usr/bin/ranlib libdino_game.a
