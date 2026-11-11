@@ -20,7 +20,7 @@ namespace dino {
         float width;
         float height;
         bool active;
-    }
+    };
     struct DinoState{
         float player_y; // this is the vertical position of the dinosour
         float player_vy; // this is the vertical velocity of the dino, reduces with time as gravity acts 
@@ -31,7 +31,7 @@ namespace dino {
         int ticks_alive; // this is the amount of frames the player has been alive, use to calculate score 
 
         uint32_t rng_state; // this is a random number generator, that works on both cpu and gpu indifferently 
-        Obstacle Obstacles[MAX_OBSTACLES];
+        Obstacle obstacles[MAX_OBSTACLES];
     };
     
       // Extremely fast, hardware-agnostic random number generator

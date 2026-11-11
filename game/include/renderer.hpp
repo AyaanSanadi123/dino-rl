@@ -1,18 +1,21 @@
-#pragma once 
+// game/include/renderer.hpp
+#pragma once
+#include <raylib.h>
+#include "dino_physics.hpp"
 
 namespace dino {
-    class Renderer{
-        public:
-            // constructor 
-            Renderer(int width = 800, int height = 450, const char* title = "Dino CUDA-RL Engine");
-            // destructor
-            ~Renderer();
 
-            bool should_close() const;
-            void draw_test_frame() const;
+class Renderer {
+public:
+    Renderer(int width, int height, const char* title);
+    ~Renderer();
 
-        private:
-            int width_;
-            int height_;
-    };
-}
+    bool should_close() const;
+    void draw_state(const DinoState& state, bool is_game_over) const;
+
+private:
+    int width_;
+    int height_;
+};
+
+} // namespace dino
