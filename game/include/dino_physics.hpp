@@ -95,9 +95,87 @@ namespace dino {
         state.ticks_alive++;
         
         // process the action 
-        state.is_ducking = (action == 2 && state.player_y == 0.0f);
+        state.is_ducking = (action == 2 && state.player_y == 0.0f); // if the player is ducking, then action must be 2 and vertical elevation must be 0
 
-        if(action == 1 && state.player)
+        if(action == 1 && state.player_y == 0.0f) state.player_vy = JUMP_VELOCITY;
+
+        // 2. Player Physics
+        // this checks, if the player is airborn and is trying to duck, if so, gravity is set to 2.8, else 1
+        float grav_multiplier = (action == 2 && state.player_y > 0.0f) ? 2.8f : 1.0f;
+        state.player_y += state.player_vy; // move the dino, upwards wrt its current velocity
+        state.player_vy += GRAVITY * grav_multiplier;
+
+        if (state.player_y <= 0.0f) {
+            state.player_y = 0.0f;
+            state.player_vy = 0.0f;
+        }
+    
+
+
+        // 3. Move & Despawn Obstacles
+        float furthest_x = 0.0f;
+        for (int i = 0; i < MAX_OBSTACLES; ++i) {
+            if (!state.obstacles[i].active) continue;
+            
+            float old_x = state.obstacles[i].x;
+            state.obstacles[i].x -= state.game_speed;
+            
+            // Reward for clearing an obstacle
+            if (old_x >= PLAYER_X && state.obstacles[i].x < PLAYER_X) {
+                reward += 1.0f;
+                state.score += 100;
+            }
+
+            if (state.obstacles[i].x + state.obstacles[i].width < 0) {
+                state.obstacles[i].active = false;
+            } else if (state.obstacles[i].x > furthest_x) {
+                furthest_x = state.obstacles[i].x;
+            }
+        }
+
+            // 4. Speed & Spawning Logic
+            if (state.game_speed < MAX_SPEED) {
+                state.game_speed += 0.002f;
+            }
+            // heuristic for the min gap required, else the dino will jump onto the next cactus
+            float min_gap = 250.0f + (state.game_speed * 15.0f);
+
+            if (furthest_x < 800.0f - min_gap) {
+            // Find inactive slot
+            for (int i = 0; i < MAX_OBSTACLES; ++i) {
+                if (!state.obstacles[i].active) {
+                    state.obstacles[i].active = true;
+                    state.obstacles[i].x = 800.0f + rand_float(&state.rng_state) * 200.0f;
+                    
+                    float r = rand_float(&state.rng_state);
+                    if (r < 0.4f) {
+                        // Small ground cactus
+                        state.obstacles[i].y = 0.0f;
+                        state.obstacles[i].width = 25.0f;
+                        state.obstacles[i].height = 45.0f;
+                    } else if (r < 0.7f) {
+                        // Large ground cactus cluster
+                        state.obstacles[i].y = 0.0f;
+                        state.obstacles[i].width = 50.0f;
+                        state.obstacles[i].height = 60.0f;
+                    } else {
+                        // Pterodactyl (Requires ducking)
+                        state.obstacles[i].y = 42.0f;
+                        state.obstacles[i].width = 45.0f;
+                        state.obstacles[i].height = 30.0f;
+                    }
+                    break;
+                }
+            }
+        }
+
+        // 5. Terminal State Check
+        if (check_collision(state)) {
+            reward = -10.0f;
+            done = true;
+        }
+        
+
     }
 
 }
