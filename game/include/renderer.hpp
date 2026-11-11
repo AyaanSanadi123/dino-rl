@@ -1,4 +1,3 @@
-// game/include/renderer.hpp
 #pragma once
 #include <raylib.h>
 #include "dino_physics.hpp"
@@ -16,6 +15,16 @@ public:
 private:
     int width_;
     int height_;
+    
+    // Texture assets
+    Texture2D tex_dino_run1;
+    Texture2D tex_dino_run2;
+    Texture2D tex_dino_duck1;
+    Texture2D tex_dino_duck2;
+    Texture2D tex_cactus_small;
+    Texture2D tex_cactus_large;
+    Texture2D tex_bird1;
+    Texture2D tex_bird2;
 };
 
 } // namespace dino
