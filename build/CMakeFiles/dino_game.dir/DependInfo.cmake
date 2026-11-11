@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/d/dino-rl/game/src/renderer.cpp" "CMakeFiles/dino_game.dir/game/src/renderer.cpp.o" "gcc" "CMakeFiles/dino_game.dir/game/src/renderer.cpp.o.d"
+  "/Users/ayaansanadi/Desktop/dino-rl/game/src/renderer.cpp" "CMakeFiles/dino_game.dir/game/src/renderer.cpp.o" "gcc" "CMakeFiles/dino_game.dir/game/src/renderer.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

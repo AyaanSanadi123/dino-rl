@@ -11,9 +11,9 @@ namespace dino {
     constexpr float PLAYER_H_STAND = 60.0f;
     constexpr float PLAYER_H_DUCK = 30.0f;
     constexpr float MAX_SPEED = 16.0f;
-    constexpr int MAX_OBSTACLES = 3;
+    constexpr int MAX_OBSTACLES = 5; // Upgraded from 3 to 5 for denser multi-obstacle RL scenarios
 
-    // define a obstical 
+    // define an obstacle 
     struct Obstacle {
         float x;
         float y;
@@ -22,7 +22,7 @@ namespace dino {
         bool active;
     };
     struct DinoState{
-        float player_y; // this is the vertical position of the dinosour
+        float player_y; // this is the vertical position of the dinosaur
         float player_vy; // this is the vertical velocity of the dino, reduces with time as gravity acts 
         bool is_ducking;
 
@@ -65,31 +65,27 @@ namespace dino {
 
     HOST_DEVICE FORCE_INLINE bool check_collision(const DinoState& state){
         float player_h = state.is_ducking ? PLAYER_H_DUCK : PLAYER_H_STAND;
-    
+        
+        // Add a small padding to make hitboxes forgiving against transparent sprite padding
+        float padding = 8.0f;
+
         for (int i = 0; i < MAX_OBSTACLES; ++i) {
             if (!state.obstacles[i].active) continue;
             const auto &obs = state.obstacles[i];
 
-            bool overlap_x = (PLAYER_X < obs.x + obs.width) && (PLAYER_X + PLAYER_W > obs.x);
-            bool overlap_y = (state.player_y < obs.y + obs.height) && (state.player_y + player_h > obs.y);
+            bool overlap_x = (PLAYER_X + padding < obs.x + obs.width - padding) && 
+                            (PLAYER_X + PLAYER_W - padding > obs.x + padding);
+                            
+            bool overlap_y = (state.player_y < obs.y + obs.height - padding) && 
+                            (state.player_y + player_h > obs.y + padding);
         
             if (overlap_x && overlap_y) return true;
         }
         return false;
     }
+
     // things that need to happen after every frame passes 
     HOST_DEVICE FORCE_INLINE void step_env(DinoState& state, int action, float& reward, bool& done){
-        // before state -> DinoState& state
-        // the decision made for this specific frame -> action (0 -> RUN,1 -> JUMP,2 ->DUCK)
-        // this function applies logic for a single tick 
-        // it checks the applied action , applies gravity if required 
-        // moves the objects to the left 
-        // renders new obsticales if required 
-
-        // this reward is not part of the game engine, rather it is for RL purposes 
-        // the done is the reset switch, only becomes true if the dinosour collides with the obstical
-
-        // this is setting the context for the current frame 
         reward = 0.05f; // Base survival reward
         done = false;
         state.ticks_alive++;
@@ -100,17 +96,14 @@ namespace dino {
         if(action == 1 && state.player_y == 0.0f) state.player_vy = JUMP_VELOCITY;
 
         // 2. Player Physics
-        // this checks, if the player is airborn and is trying to duck, if so, gravity is set to 2.8, else 1
         float grav_multiplier = (action == 2 && state.player_y > 0.0f) ? 2.8f : 1.0f;
-        state.player_y += state.player_vy; // move the dino, upwards wrt its current velocity
+        state.player_y += state.player_vy; // move the dino upwards wrt its current velocity
         state.player_vy += GRAVITY * grav_multiplier;
 
         if (state.player_y <= 0.0f) {
             state.player_y = 0.0f;
             state.player_vy = 0.0f;
         }
-    
-
 
         // 3. Move & Despawn Obstacles
         float furthest_x = 0.0f;
@@ -133,14 +126,14 @@ namespace dino {
             }
         }
 
-            // 4. Speed & Spawning Logic
-            if (state.game_speed < MAX_SPEED) {
-                state.game_speed += 0.002f;
-            }
-            // heuristic for the min gap required, else the dino will jump onto the next cactus
-            float min_gap = 250.0f + (state.game_speed * 15.0f);
+        // 4. Speed & Spawning Logic
+        if (state.game_speed < MAX_SPEED) {
+            state.game_speed += 0.002f;
+        }
+        
+        float min_gap = 200.0f + (state.game_speed * 12.0f); // Slightly adjusted spacing for 5 obstacles
 
-            if (furthest_x < 800.0f - min_gap) {
+        if (furthest_x < 800.0f - min_gap) {
             // Find inactive slot
             for (int i = 0; i < MAX_OBSTACLES; ++i) {
                 if (!state.obstacles[i].active) {
@@ -148,19 +141,24 @@ namespace dino {
                     state.obstacles[i].x = 800.0f + rand_float(&state.rng_state) * 200.0f;
                     
                     float r = rand_float(&state.rng_state);
-                    if (r < 0.4f) {
-                        // Small ground cactus
+                    if (r < 0.25f) {
+                        // 1. Small ground cactus (Jump over)
                         state.obstacles[i].y = 0.0f;
                         state.obstacles[i].width = 25.0f;
                         state.obstacles[i].height = 45.0f;
-                    } else if (r < 0.7f) {
-                        // Large ground cactus cluster
+                    } else if (r < 0.50f) {
+                        // 2. Large ground cactus cluster (Jump over)
                         state.obstacles[i].y = 0.0f;
                         state.obstacles[i].width = 50.0f;
                         state.obstacles[i].height = 60.0f;
+                    } else if (r < 0.75f) {
+                        // 3. Walk-under bird (High altitude - run right under it)
+                        state.obstacles[i].y = 65.0f;
+                        state.obstacles[i].width = 45.0f;
+                        state.obstacles[i].height = 25.0f;
                     } else {
-                        // Pterodactyl (Requires ducking)
-                        state.obstacles[i].y = 42.0f;
+                        // 4. Duck-under bird (Mid altitude - MUST duck)
+                        state.obstacles[i].y = 35.0f;
                         state.obstacles[i].width = 45.0f;
                         state.obstacles[i].height = 30.0f;
                     }
@@ -174,8 +172,5 @@ namespace dino {
             reward = -10.0f;
             done = true;
         }
-        
-
     }
-
 }
