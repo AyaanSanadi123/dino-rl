@@ -3,13 +3,13 @@
 # No other meaning or use of this file is supported.
 
 method=git
-command=/opt/homebrew/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/Users/ayaansanadi/Desktop/dino-rl/build/_deps/raylib-subbuild/raylib-populate-prefix/tmp/raylib-populate-gitclone.cmake
-source_dir=/Users/ayaansanadi/Desktop/dino-rl/build/_deps/raylib-src
-work_dir=/Users/ayaansanadi/Desktop/dino-rl/build/_deps
+command=/usr/bin/cmake;-P;/mnt/d/dino-rl/build/_deps/raylib-subbuild/raylib-populate-prefix/tmp/raylib-populate-gitclone.cmake
+source_dir=/mnt/d/dino-rl/build/_deps/raylib-src
+work_dir=/mnt/d/dino-rl/build/_deps
 repository=https://github.com/raysan5/raylib.git
 remote=origin
 init_submodules=TRUE
 recurse_submodules=--recursive
 submodules=
 CMP0097=NEW
-      
+

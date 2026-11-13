@@ -1,32 +1,42 @@
-cmake_minimum_required(VERSION 3.20)
-project(DinoCudaRL LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.15)
+project(dino_rl_project)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Keep Raylib build fast and minimal
-set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-set(BUILD_GAMES    OFF CACHE BOOL "" FORCE)
-
+# 1. Build Raylib and the human play target
 include(FetchContent)
 FetchContent_Declare(
     raylib
-    GIT_REPOSITORY https://github.com/raysan5/raylib.git
-    GIT_TAG 5.0
-    GIT_SHALLOW TRUE
+    URL https://github.com/raysan5/raylib/archive/refs/tags/5.0.tar.gz
 )
 FetchContent_MakeAvailable(raylib)
 
-# Module 1: Game Engine & Renderer
-add_library(dino_game STATIC
-    game/src/renderer.cpp
-)
-target_include_directories(dino_game PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/game/include
-)
-target_link_libraries(dino_game PUBLIC raylib)
+# Core game library
+add_library(dino_game STATIC game/src/renderer.cpp)
+target_link_libraries(dino_game PRIVATE raylib)
+target_include_directories(dino_game PUBLIC game/include)
 
-# Executable 1: Human Playable Binary
+# Human player executable
 add_executable(play_human apps/play_human.cpp)
-target_link_libraries(play_human PRIVATE dino_game)
+target_link_libraries(play_human PRIVATE dino_game raylib)
+
+# 2. Build the Python pybind11 module for Reinforcement Learning
+find_package(Python 3 COMPONENTS Interpreter Development REQUIRED)
+
+execute_process(
+  COMMAND "${Python_EXECUTABLE}" -c "import pybind11; print(pybind11.get_cmake_dir())"
+  OUTPUT_VARIABLE _pybind11_dir
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+list(APPEND CMAKE_PREFIX_PATH "${_pybind11_dir}")
+find_package(pybind11 REQUIRED)
+
+pybind11_add_module(dino_cpp python_baseline/wrapper.cpp)
+target_link_libraries(dino_cpp PRIVATE dino_game)
+target_include_directories(dino_cpp PRIVATE game/include)
+
+if(MSVC)
+    target_compile_options(dino_cpp PRIVATE /O2)
+else()
+    target_compile_options(dino_cpp PRIVATE -O3 -Wall)
+endif()
