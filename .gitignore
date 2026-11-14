@@ -1,2 +1,52 @@
-venv/
+# ==========================================
+# C++ / CMake / Raylib Build Artifacts
+# ==========================================
 build/
+compile_commands.json
+*.so
+*.dylib
+*.dll
+*.pyd
+*.a
+*.lib
+*.o
+*.obj
+*.out
+play_human
+
+# ==========================================
+# Python Environment & Bytecode
+# ==========================================
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# ==========================================
+# Reinforcement Learning (SB3 / TensorBoard)
+# ==========================================
+# Model checkpoints
+best_model/
+checkpoints/
+*.zip
+*.pt
+*.pth
+
+# Training & evaluation logs
+dino_tensorboard/
+tensorboard/
+logs/
+*.npz
+events.out.tfevents*
+
+# ==========================================
+# IDEs & OS Files (WSL / Windows / Linux)
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
