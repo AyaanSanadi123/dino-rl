@@ -417,4 +417,6 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: \
  /usr/include/c++/13/bits/mask_array.h \
  /usr/include/c++/13/bits/indirect_array.h /usr/include/c++/13/variant \
  /mnt/d/dino-rl/game/include/dino_physics.hpp \
- /mnt/d/dino-rl/game/include/compat.hpp
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
+ /mnt/d/dino-rl/game/include/compat.hpp \
+ /mnt/d/dino-rl/game/include/obstacle_queue.hpp

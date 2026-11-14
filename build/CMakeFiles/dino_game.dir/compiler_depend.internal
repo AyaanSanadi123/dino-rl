@@ -6,9 +6,8 @@ CMakeFiles/dino_game.dir/game/src/renderer.cpp.o
  /mnt/d/dino-rl/build/_deps/raylib-src/src/raylib.h
  /mnt/d/dino-rl/game/include/compat.hpp
  /mnt/d/dino-rl/game/include/dino_physics.hpp
+ /mnt/d/dino-rl/game/include/obstacle_queue.hpp
  /mnt/d/dino-rl/game/include/renderer.hpp
- /usr/include/c++/13/cstdint
- /usr/include/c++/13/pstl/pstl_config.h
  /usr/include/features-time64.h
  /usr/include/features.h
  /usr/include/stdc-predef.h
@@ -24,12 +23,10 @@ CMakeFiles/dino_game.dir/game/src/renderer.cpp.o
  /usr/include/x86_64-linux-gnu/bits/typesizes.h
  /usr/include/x86_64-linux-gnu/bits/wchar.h
  /usr/include/x86_64-linux-gnu/bits/wordsize.h
- /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h
- /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h
- /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
  /usr/include/x86_64-linux-gnu/gnu/stubs.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
 

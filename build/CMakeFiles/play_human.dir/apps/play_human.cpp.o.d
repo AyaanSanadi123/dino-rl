@@ -151,8 +151,10 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o: \
  /usr/include/c++/13/bits/istream.tcc /usr/include/c++/13/ctime \
  /mnt/d/dino-rl/build/_deps/raylib-src/src/raylib.h \
  /mnt/d/dino-rl/game/include/renderer.hpp \
- /mnt/d/dino-rl/game/include/dino_physics.hpp /usr/include/c++/13/cstdint \
+ /mnt/d/dino-rl/game/include/obstacle_queue.hpp \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
+ /mnt/d/dino-rl/game/include/compat.hpp \
+ /mnt/d/dino-rl/game/include/dino_physics.hpp \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
- /mnt/d/dino-rl/game/include/compat.hpp
+ /usr/include/x86_64-linux-gnu/bits/stdint-least.h

@@ -5,6 +5,7 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o
  /mnt/d/dino-rl/python_baseline/wrapper.cpp
  /mnt/d/dino-rl/game/include/compat.hpp
  /mnt/d/dino-rl/game/include/dino_physics.hpp
+ /mnt/d/dino-rl/game/include/obstacle_queue.hpp
  /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/attr.h
  /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/buffer_info.h
  /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/cast.h
@@ -510,6 +511,7 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o
  /usr/include/x86_64-linux-gnu/sys/types.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h

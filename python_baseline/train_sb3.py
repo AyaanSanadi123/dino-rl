@@ -15,18 +15,20 @@ def main():
     env = Monitor(DinoGameEnv())
     eval_env = Monitor(DinoGameEnv())
 
-    # 3. Setup Early Stopping & Evaluation Callbacks
-    # - Stops training if no new high score is hit in 15 consecutive evaluation checks
+    # 3. Setup Early Stopping & Evaluation Callbacks (Doubled exploration window)
+    # - Warmup: 40 evals (409,600 steps) before early stopping can trigger
+    # - Patience: 60 evals (614,400 steps / 300 rollouts) without a new high score
     stop_callback = StopTrainingOnNoModelImprovement(
-        max_no_improvement_evals=15, 
-        min_evals=20
+        max_no_improvement_evals=60,
+        min_evals=40,
+        verbose=1
     )
 
     eval_callback = EvalCallback(
         eval_env=eval_env,
         best_model_save_path=best_model_dir,
         log_path=log_dir,
-        eval_freq=2048,           # Evaluates once every rollout epoch (2048 steps)
+        eval_freq=10240,          # Evaluates every 5 rollouts (5 * 2048 steps)
         n_eval_episodes=5,
         deterministic=True,
         render=False,
@@ -37,13 +39,13 @@ def main():
     model = PPO(
         policy="MlpPolicy",
         env=env,
-        device="cuda",            # <--- Forces PyTorch to run on your RTX 4050 GPU
+        device="cuda",
         learning_rate=3.0e-4,
-        n_steps=2048,             # Rollout buffer size
-        batch_size=256,           # Increased batch size to better feed the GPU parallel cores
-        n_epochs=10,              # Optimization epochs per rollout
+        n_steps=2048,
+        batch_size=256,
+        n_epochs=10,
         gamma=0.99,
-        ent_coef=0.01,            # Keeps exploration active
+        ent_coef=0.01,            # Keeps action exploration active
         verbose=1
     )
 
@@ -53,14 +55,14 @@ def main():
 
     print("--- Starting GPU-Accelerated Phase-2 Training ---")
     print(f"Target: {target_iterations:,} iterations ({target_timesteps:,} total timesteps) on RTX 4050.")
-    print("Early stopping enabled: Will halt if no improvement is seen for 15 evaluations.")
+    print("Early stopping enabled: 40-eval warmup, halts after 60 evals (~614k steps) without improvement.")
     
     model.learn(
         total_timesteps=target_timesteps,
         callback=eval_callback
     )
 
-    print(f"\nTraining completed or early-stopped.")
+    print("\nTraining completed or early-stopped.")
     print(f"Your best performing model is securely saved at: {best_model_dir}best_model.zip")
 
 if __name__ == "__main__":

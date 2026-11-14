@@ -1,62 +1,96 @@
-import gymnasium as gymnasium
+import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
-import dino_cpp  # Imports your compiled C++ module from build/
-
-import sys
-import os
-
-# Add the build folder to Python's search path dynamically
-build_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../build'))
-sys.path.append(build_dir)
-
 import dino_cpp
 
-class DinoGameEnv(gymnasium.Env):
-    metadata = {"render_modes": ["human"]}
+PLAYER_X = 80.0
+MAX_OBSTACLES = 5
+
+class DinoGameEnv(gym.Env):
+    """Gymnasium RL wrapper around the pure C/C++ Dino physics engine."""
 
     def __init__(self):
-        super(DinoGameEnv, self).__init__()
-        
-        # Action space: 0 = Run, 1 = Jump, 2 = Duck
-        self.action_space = spaces.Discrete(3)
-        
-        # Observation space: 1D vector tracking player and obstacle states
-        # [player_y, player_vy, is_ducking, game_speed, obs1_x, obs1_y, obs1_w, obs1_h, obs1_active, ...]
-        self.observation_space = spaces.Box(
-            low=-np.inf, high=np.inf, shape=(29,), dtype=np.float32
-        )
-        
+        super().__init__()
         self.state = dino_cpp.DinoState()
+
+        # Actions: 0 = Run/Stand, 1 = Jump, 2 = Duck/Fast-Fall
+        self.action_space = spaces.Discrete(3)
+
+        # Observation: 4 player features + 5 obstacles * 4 features (dx, y, w, h) = 24 floats
+        self.observation_space = spaces.Box(
+            low=-2.0,
+            high=2.0,
+            shape=(24,),
+            dtype=np.float32
+        )
+
+        self.rng = np.random.default_rng()
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         if seed is not None:
-            dino_cpp.reset_env(self.state, int(seed))
-        else:
-            dino_cpp.reset_env(self.state, 42)
-            
+            self.rng = np.random.default_rng(seed)
+
+        cpp_seed = int(self.rng.integers(1, 2**31 - 1))
+        dino_cpp.reset_env(self.state, cpp_seed)
+
         return self._get_obs(), {}
 
     def step(self, action):
-        # Step C++ physics forward by 1 frame
-        reward, terminated = dino_cpp.step_env(self.state, int(action))
-        
+        # 1. Snapshot pre-step state to detect transitions
+        prev_score = self.state.score
+        was_grounded = (self.state.player_y == 0.0)
+
+        # 2. Advance pure physics engine by 1 frame
+        terminated = dino_cpp.step_env(self.state, int(action))
+
+        # 3. Compute standardized RL reward & punishment
+        if terminated:
+            reward = -1.0
+        else:
+            reward = 0.01  # Base survival reward per frame
+
+            # Obstacle cleared bonus (score increments when is_danger flips to False)
+            if self.state.score > prev_score:
+                reward += 1.0
+
+            # Small action tax for initiating a jump to prevent blind jump-spamming
+            if int(action) == 1 and was_grounded:
+                reward -= 0.02
+
         obs = self._get_obs()
-        truncated = False  # No time limit truncation, ends only on crash
-        
-        info = {"score": self.state.score}
-        return obs, reward, terminated, truncated, info
+        truncated = False
+        info = {
+            "score": self.state.score,
+            "ticks_alive": self.state.ticks_alive
+        }
+
+        return obs, float(reward), bool(terminated), truncated, info
 
     def _get_obs(self):
-        obs_list = [
-            self.state.player_y,
-            self.state.player_vy,
-            float(self.state.is_ducking),
-            self.state.game_speed
+        # 1. Normalized Player State (4 floats)
+        obs = [
+            self.state.player_y / 150.0,                  # Altitude [0, ~1.0]
+            self.state.player_vy / 15.0,                  # Vertical velocity [-1.0, 1.0]
+            1.0 if self.state.is_ducking else 0.0,        # Ducking flag {0.0, 1.0}
+            (self.state.game_speed - 7.0) / (16.0 - 7.0)  # Normalized speed [0.0, 1.0]
         ]
-        # Pack obstacle details into flat vector
-        for obs in self.state.obstacles:
-            obs_list.extend([obs.x, obs.y, obs.width, obs.height, float(obs.active)])
-            
-        return np.array(obs_list, dtype=np.float32)
+
+        # 2. Extract active threats in FIFO order from the C ring buffer
+        threats = [o for o in self.state.obstacles if o.is_danger]
+
+        # 3. Pack 5 obstacle slots (20 floats)
+        for i in range(MAX_OBSTACLES):
+            if i < len(threats):
+                o = threats[i]
+                obs.extend([
+                    (o.x - PLAYER_X) / 800.0,  # Relative distance to front edge
+                    o.y / 100.0,               # Elevation (0.0=cactus, 0.35=mid bird, 0.65=high bird)
+                    o.width / 60.0,            # Normalized width
+                    o.height / 60.0            # Normalized height
+                ])
+            else:
+                # Empty slot padding (far away, zero dimensions)
+                obs.extend([1.5, 0.0, 0.0, 0.0])
+
+        return np.array(obs, dtype=np.float32)

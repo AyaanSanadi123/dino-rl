@@ -66,24 +66,22 @@ void Renderer::draw_state(const DinoState& state, bool is_game_over) const {
     
     DrawTexturePro(current_dino_tex, source_rect, dest_rect, origin, 0.0f, WHITE);
 
-    // 3. Draw the Obstacles
-    for (int i = 0; i < MAX_OBSTACLES; ++i) {
-        if (!state.obstacles[i].active) continue;
-        
-        const auto& obs = state.obstacles[i];
-        float screen_obs_y = ground_y - obs.y - obs.height;
+    // 3. Draw the Obstacles from the Circular Ring Buffer
+    for (int i = 0; i < state.obstacles.count; ++i) {
+        const struct Obstacle* obs = queue_get_const(&state.obstacles, i);
+        float screen_obs_y = ground_y - obs->y - obs->height;
         
         Texture2D obs_tex;
-        if (obs.y > 0.0f) { // Pterodactyl
+        if (obs->y > 0.0f) { // Pterodactyl
             obs_tex = (anim_frame == 0) ? tex_bird1 : tex_bird2; // Flapping animation
-        } else if (obs.width > 30.0f) {
+        } else if (obs->width > 30.0f) {
             obs_tex = tex_cactus_large;
         } else {
             obs_tex = tex_cactus_small;
         }
 
         Rectangle obs_source = { 0.0f, 0.0f, (float)obs_tex.width, (float)obs_tex.height };
-        Rectangle obs_dest = { obs.x, screen_obs_y, obs.width, obs.height };
+        Rectangle obs_dest = { obs->x, screen_obs_y, obs->width, obs->height };
         DrawTexturePro(obs_tex, obs_source, obs_dest, origin, 0.0f, WHITE);
     }
 

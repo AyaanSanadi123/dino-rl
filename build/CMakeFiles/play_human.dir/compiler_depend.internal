@@ -6,6 +6,7 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o
  /mnt/d/dino-rl/build/_deps/raylib-src/src/raylib.h
  /mnt/d/dino-rl/game/include/compat.hpp
  /mnt/d/dino-rl/game/include/dino_physics.hpp
+ /mnt/d/dino-rl/game/include/obstacle_queue.hpp
  /mnt/d/dino-rl/game/include/renderer.hpp
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h
@@ -70,7 +71,6 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o
  /usr/include/c++/13/cerrno
  /usr/include/c++/13/clocale
  /usr/include/c++/13/cstddef
- /usr/include/c++/13/cstdint
  /usr/include/c++/13/cstdio
  /usr/include/c++/13/cstdlib
  /usr/include/c++/13/ctime
@@ -196,6 +196,7 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o
  /usr/include/x86_64-linux-gnu/sys/single_threaded.h
  /usr/include/x86_64-linux-gnu/sys/types.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
 

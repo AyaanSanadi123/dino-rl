@@ -4,6 +4,7 @@
 CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_baseline/wrapper.cpp \
   /mnt/d/dino-rl/game/include/compat.hpp \
   /mnt/d/dino-rl/game/include/dino_physics.hpp \
+  /mnt/d/dino-rl/game/include/obstacle_queue.hpp \
   /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/attr.h \
   /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/buffer_info.h \
   /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/cast.h \
@@ -509,6 +510,7 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
@@ -850,7 +852,9 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 
 /usr/include/python3.12/Python.h:
 
-/usr/include/c++/13/bits/functexcept.h:
+/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
+
+/usr/include/math.h:
 
 /usr/include/c++/13/bits/stl_algobase.h:
 
@@ -926,15 +930,13 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 
 /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/trampoline_self_life_support.h:
 
+/usr/include/c++/13/bits/basic_ios.tcc:
+
 /usr/include/python3.12/cpython/ceval.h:
 
 /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/detail/class.h:
 
-/usr/include/c++/13/bits/basic_ios.tcc:
-
 /usr/include/c++/13/pstl/execution_defs.h:
-
-/usr/include/linux/stddef.h:
 
 /usr/include/c++/13/bits/locale_facets.h:
 
@@ -973,6 +975,8 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 /usr/include/c++/13/bits/node_handle.h:
 
 /usr/include/c++/13/forward_list:
+
+/usr/include/c++/13/bits/functexcept.h:
 
 /usr/include/python3.12/cpython/code.h:
 
@@ -1016,10 +1020,6 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 
 /usr/include/c++/13/bits/exception_defines.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
-/usr/include/math.h:
-
 /usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
 
 /usr/include/c++/13/bits/enable_special_members.h:
@@ -1041,10 +1041,6 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 /usr/include/c++/13/bits/cxxabi_init_exception.h:
 
 /usr/include/c++/13/typeinfo:
-
-/usr/include/python3.12/moduleobject.h:
-
-/usr/include/c++/13/algorithm:
 
 /usr/include/c++/13/bits/unordered_set.h:
 
@@ -1098,15 +1094,25 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 
 /usr/include/c++/13/backward/binders.h:
 
-/usr/include/c++/13/bits/cxxabi_forced.h:
+/mnt/d/dino-rl/python_baseline/wrapper.cpp:
+
+/mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/detail/function_ref.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-least.h:
 
 /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/detail/function_record_pyobject.h:
 
-/mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/detail/function_ref.h:
+/usr/include/linux/stddef.h:
 
-/mnt/d/dino-rl/python_baseline/wrapper.cpp:
+/mnt/d/dino-rl/game/include/obstacle_queue.hpp:
+
+/usr/include/c++/13/typeindex:
+
+/usr/include/x86_64-linux-gnu/bits/endianness.h:
+
+/usr/include/c++/13/bits/chrono.h:
+
+/usr/include/c++/13/bits/cxxabi_forced.h:
 
 /mnt/d/dino-rl/venv/lib/python3.12/site-packages/pybind11/include/pybind11/detail/native_enum_data.h:
 
@@ -1131,10 +1137,6 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 /usr/include/c++/13/bits/valarray_array.h:
 
 /usr/include/c++/13/bits/atomic_lockfree_defines.h:
-
-/usr/include/x86_64-linux-gnu/bits/endianness.h:
-
-/usr/include/c++/13/bits/chrono.h:
 
 /usr/include/c++/13/bits/localefwd.h:
 
@@ -1165,6 +1167,10 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 /usr/include/c++/13/bit:
 
 /usr/include/alloca.h:
+
+/usr/include/python3.12/moduleobject.h:
+
+/usr/include/c++/13/algorithm:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
 
@@ -1271,6 +1277,8 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
 /usr/include/c++/13/bits/unique_ptr.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h:
 
 /usr/include/stdio.h:
 
@@ -1507,8 +1515,6 @@ CMakeFiles/dino_cpp.dir/python_baseline/wrapper.cpp.o: /mnt/d/dino-rl/python_bas
 /usr/include/c++/13/bits/nested_exception.h:
 
 /usr/include/c++/13/tuple:
-
-/usr/include/c++/13/typeindex:
 
 /usr/include/c++/13/bits/stl_heap.h:
 

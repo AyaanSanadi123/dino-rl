@@ -5,9 +5,8 @@ CMakeFiles/dino_game.dir/game/src/renderer.cpp.o: /mnt/d/dino-rl/game/src/render
   _deps/raylib-src/src/raylib.h \
   /mnt/d/dino-rl/game/include/compat.hpp \
   /mnt/d/dino-rl/game/include/dino_physics.hpp \
+  /mnt/d/dino-rl/game/include/obstacle_queue.hpp \
   /mnt/d/dino-rl/game/include/renderer.hpp \
-  /usr/include/c++/13/cstdint \
-  /usr/include/c++/13/pstl/pstl_config.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
   /usr/include/stdc-predef.h \
@@ -23,72 +22,64 @@ CMakeFiles/dino_game.dir/game/src/renderer.cpp.o: /mnt/d/dino-rl/game/src/render
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
-  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
-  /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h \
-  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
 
-
-/usr/include/x86_64-linux-gnu/bits/long-double.h:
-
-/usr/include/features-time64.h:
-
-/usr/include/stdint.h:
-
-/usr/include/x86_64-linux-gnu/bits/timesize.h:
-
-/usr/include/c++/13/pstl/pstl_config.h:
-
-/mnt/d/dino-rl/game/include/compat.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h:
-
-/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
-
-/mnt/d/dino-rl/game/include/dino_physics.hpp:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
-
-/usr/include/features.h:
-
-_deps/raylib-src/src/raylib.h:
-
-/usr/include/c++/13/cstdint:
-
-/mnt/d/dino-rl/game/src/renderer.cpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
-
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
-
-/usr/include/x86_64-linux-gnu/bits/time64.h:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
-/usr/include/x86_64-linux-gnu/bits/types.h:
+/usr/include/x86_64-linux-gnu/bits/time64.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h:
+
+/mnt/d/dino-rl/game/src/renderer.cpp:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+_deps/raylib-src/src/raylib.h:
+
+/usr/include/features.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
+
+/mnt/d/dino-rl/game/include/compat.hpp:
+
+/mnt/d/dino-rl/game/include/dino_physics.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/mnt/d/dino-rl/game/include/obstacle_queue.hpp:
 
 /mnt/d/dino-rl/game/include/renderer.hpp:
 
-/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/x86_64-linux-gnu/bits/timesize.h:
+
+/usr/include/stdint.h:
+
+/usr/include/features-time64.h:
+
+/usr/include/x86_64-linux-gnu/bits/types.h:
+
+/usr/include/x86_64-linux-gnu/bits/long-double.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:

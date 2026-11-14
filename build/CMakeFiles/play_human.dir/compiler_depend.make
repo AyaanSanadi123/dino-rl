@@ -5,6 +5,7 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o: /mnt/d/dino-rl/apps/play_human.
   _deps/raylib-src/src/raylib.h \
   /mnt/d/dino-rl/game/include/compat.hpp \
   /mnt/d/dino-rl/game/include/dino_physics.hpp \
+  /mnt/d/dino-rl/game/include/obstacle_queue.hpp \
   /mnt/d/dino-rl/game/include/renderer.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
@@ -69,7 +70,6 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o: /mnt/d/dino-rl/apps/play_human.
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
   /usr/include/c++/13/cstddef \
-  /usr/include/c++/13/cstdint \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
   /usr/include/c++/13/ctime \
@@ -195,6 +195,7 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o: /mnt/d/dino-rl/apps/play_human.
   /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
 
@@ -303,6 +304,8 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o: /mnt/d/dino-rl/apps/play_human.
 
 /usr/include/ctype.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
 /usr/include/c++/13/bits/char_traits.h:
@@ -312,12 +315,6 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o: /mnt/d/dino-rl/apps/play_human.
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
 
 /usr/include/c++/13/bits/ios_base.h:
-
-/usr/include/c++/13/bits/move.h:
-
-/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
-
-/usr/include/c++/13/type_traits:
 
 /usr/include/c++/13/cwctype:
 
@@ -339,31 +336,33 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o: /mnt/d/dino-rl/apps/play_human.
 
 /usr/include/c++/13/bits/hash_bytes.h:
 
-/usr/include/x86_64-linux-gnu/bits/time64.h:
-
-/usr/include/c++/13/bits/basic_ios.h:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
-
-/usr/include/c++/13/bits/basic_ios.tcc:
-
-/usr/include/c++/13/bits/nested_exception.h:
-
-/usr/include/c++/13/bits/memory_resource.h:
-
-/usr/include/wchar.h:
-
 /usr/include/alloca.h:
 
-/usr/include/c++/13/bit:
+/usr/include/c++/13/bits/move.h:
 
 /usr/include/c++/13/bits/basic_string.tcc:
 
+/usr/include/c++/13/bit:
+
+/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+
+/usr/include/c++/13/type_traits:
+
 /usr/include/c++/13/bits/stl_construct.h:
+
+/usr/include/c++/13/bits/exception_defines.h:
+
+/usr/include/c++/13/bits/localefwd.h:
 
 /usr/include/c++/13/iosfwd:
 
 /usr/include/c++/13/bits/predefined_ops.h:
+
+/mnt/d/dino-rl/game/include/obstacle_queue.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
+
+/usr/include/c++/13/ext/numeric_traits.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
@@ -395,6 +394,22 @@ CMakeFiles/play_human.dir/apps/play_human.cpp.o: /mnt/d/dino-rl/apps/play_human.
 
 _deps/raylib-src/src/raylib.h:
 
+/usr/include/x86_64-linux-gnu/bits/time64.h:
+
+/usr/include/c++/13/bits/basic_ios.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
+
+/usr/include/c++/13/bits/basic_ios.tcc:
+
+/usr/include/c++/13/bits/nested_exception.h:
+
+/usr/include/c++/13/bits/memory_resource.h:
+
+/usr/include/wchar.h:
+
+/usr/include/stdc-predef.h:
+
 /usr/include/c++/13/bits/ostream_insert.h:
 
 /mnt/d/dino-rl/game/include/renderer.hpp:
@@ -418,10 +433,6 @@ _deps/raylib-src/src/raylib.h:
 /usr/include/c++/13/bits/ptr_traits.h:
 
 /usr/include/c++/13/bits/stl_iterator_base_types.h:
-
-/usr/include/c++/13/bits/localefwd.h:
-
-/usr/include/c++/13/bits/exception_defines.h:
 
 /usr/include/c++/13/bits/locale_facets.h:
 
@@ -455,8 +466,6 @@ _deps/raylib-src/src/raylib.h:
 
 /usr/include/c++/13/ios:
 
-/usr/include/stdc-predef.h:
-
 /usr/include/c++/13/bits/stl_function.h:
 
 /usr/include/c++/13/bits/utility.h:
@@ -469,15 +478,13 @@ _deps/raylib-src/src/raylib.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
-/usr/include/c++/13/bits/charconv.h:
-
 /usr/include/c++/13/bits/stl_pair.h:
+
+/usr/include/c++/13/bits/charconv.h:
 
 /usr/include/c++/13/cstdio:
 
 /mnt/d/dino-rl/game/include/dino_physics.hpp:
-
-/usr/include/c++/13/cstdint:
 
 /usr/include/c++/13/cstdlib:
 
@@ -496,10 +503,6 @@ _deps/raylib-src/src/raylib.h:
 /usr/include/c++/13/cctype:
 
 /usr/include/c++/13/ext/atomicity.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
-
-/usr/include/c++/13/ext/numeric_traits.h:
 
 /usr/include/c++/13/ext/string_conversions.h:
 

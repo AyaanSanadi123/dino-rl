@@ -1,5 +1,6 @@
 #pragma once
 #include <raylib.h>
+#include "obstacle_queue.hpp"
 #include "dino_physics.hpp"
 
 namespace dino {

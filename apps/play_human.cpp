@@ -1,4 +1,4 @@
-// game/src/play_human.cpp
+// apps/play_human.cpp
 #include <iostream>
 #include <ctime>
 #include <raylib.h>
@@ -11,37 +11,31 @@ int main() {
 
     // 2. Initialize Physics State
     dino::DinoState state;
-    // Generate a unique CPU seed based on current wall-clock time
     uint32_t seed = static_cast<uint32_t>(std::time(nullptr));
-    if (seed == 0) seed = 1; // Prevent zero seed
+    if (seed == 0) seed = 1;
     dino::reset_env(state, seed);
 
     bool is_game_over = false;
-    float reward = 0.0f; // Human doesn't need this, but step_env requires it
 
     // 3. Main Game Loop (capped at 60 FPS by Renderer's SetTargetFPS)
     while (!renderer.should_close()) {
-        
         if (is_game_over) {
-            // Wait for human to press SPACE to restart
             if (IsKeyPressed(KEY_SPACE)) {
-                seed++; // Slightly alter seed for a new obstacle pattern
+                seed++;
                 dino::reset_env(state, seed);
                 is_game_over = false;
             }
         } else {
-            // Map Keyboard to Integer Action
             int action = 0; // Default: Run
             
-            // Prioritize ducking. If duck is held, jumping is disabled.
             if (IsKeyDown(KEY_DOWN)) {
                 action = 2; // Duck
             } else if (IsKeyDown(KEY_SPACE) || IsKeyDown(KEY_UP)) {
                 action = 1; // Jump
             }
 
-            // Step the math forward by exactly one discrete frame
-            dino::step_env(state, action, reward, is_game_over);
+            // Pure physics step
+            dino::step_env(state, action, is_game_over);
         }
 
         // 4. Draw the calculated state to the screen
